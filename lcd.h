@@ -39,11 +39,11 @@
 
 #include "libohiboard.h"
 
-typedef enum _Lcd_Mode
+typedef enum _Lcd_PinMode
 {
-    LCD_MODE_4BIT,
-    LCD_MODE_8BIT
-} Lcd_Mode;
+    LCD_PINMODE_4BIT,
+    LCD_PINMODE_8BIT
+} Lcd_PinMode;
 
 /**
  *
@@ -66,11 +66,13 @@ typedef struct _Lcd_Device
     uint8_t columns;
     uint8_t rows;
 
-//    uint8_t display;
-//    uint8_t mode;
-//    uint8_t function;
+    uint8_t display;
+    uint8_t mode;
+    uint8_t function;
 
-    Lcd_Mode mode;
+    Lcd_PinMode pinMode;
+
+    uint8_t basetime;
 
     uint8_t rowsOffsets[4];
 
