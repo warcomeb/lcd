@@ -31,6 +31,10 @@
 
 #include "lcd.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define LCD_CMD_CLEAR_DISPLAY    0x01
 #define LCD_CMD_RETURN_HOME      0x02
 #define LCD_CMD_ENTRY_MODE_SET   0x04
@@ -368,4 +372,46 @@ void Lcd_home (Lcd_Device* dev)
     Lcd_sendCommand(dev,LCD_CMD_RETURN_HOME,FALSE);
     Lcd_delay(dev,2000);
 }
+
+/**************************** CLI Section *************************************/
+
+static void Lcd_cliHelp()
+{
+    Cli_sendHelpString("help","Print help information");
+    Cli_sendHelpString("status","Print status information");
+    Cli_sendHelpString("write","Write char in row and columns point");
+}
+
+void Lcd_cliParser(Lcd_Device* dev, int argc, char argv[][LOCCIONI_CLI_BUFFER_SIZE])
+{
+    uint8_t row = 0, column = 0;
+
+    if ((argc == 1) || ((argc == 2) && (strcmp(argv[1],"help") == 0)))
+    {
+        Lcd_cliHelp();
+        return;
+    }
+
+    if ((argc == 2) && (strcmp(argv[1],"status") == 0))
+    {
+//        Led_toggle(dev);
+    }
+
+    if ((argc == 3) && (strcmp(argv[1],"write") == 0))
+    {
+        Lcd_setCursor(dev,0,0);
+        Lcd_write(dev,argv[2][0]);
+        return;
+    }
+    if ((argc == 5) && (strcmp(argv[1],"write") == 0))
+    {
+        dtu8(argv[3],&row,2);
+        dtu8(argv[4],&column,2);
+        Lcd_setCursor(dev,column,row);
+        Lcd_write(dev,argv[2][0]);
+        return;
+    }
+
+}
+
 

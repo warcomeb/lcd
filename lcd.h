@@ -39,6 +39,8 @@
 
 #include "libohiboard.h"
 
+#include "cli/cli.h"
+
 typedef enum _Lcd_PinMode
 {
     LCD_PINMODE_4BIT,
@@ -106,6 +108,9 @@ void Lcd_home (Lcd_Device* dev);
 void Lcd_setCursor (Lcd_Device* dev, uint8_t column, uint8_t row);
 
 void Lcd_setRowsOffset (Lcd_Device* dev, uint8_t row0, uint8_t row1, uint8_t row2, uint8_t row3);
+
+
+void Lcd_cliParser(Lcd_Device* dev, int argc, char argv[][LOCCIONI_CLI_BUFFER_SIZE]);
 
 
 #endif /* __WARCOMEB_LCD_H */
